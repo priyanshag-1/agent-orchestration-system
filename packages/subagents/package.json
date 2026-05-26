@@ -1,0 +1,22 @@
+{
+  "name": "@aos/subagents",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@aos/core": "workspace:*",
+    "@aos/tool-runtime": "workspace:*",
+    "@aos/tools": "workspace:*",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}
+
