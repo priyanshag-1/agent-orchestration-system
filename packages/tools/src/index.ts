@@ -3,6 +3,7 @@ export * from "./git/index.js";
 export * from "./github/index.js";
 export * from "./lsp/index.js";
 export * from "./mcp/index.js";
+export * from "./orchestration/index.js";
 export * from "./shell/index.js";
 export * from "./web/index.js";
 
@@ -11,6 +12,7 @@ import { gitTools } from "./git/index.js";
 import { githubTools } from "./github/index.js";
 import { lspTools } from "./lsp/index.js";
 import { mcpTools } from "./mcp/index.js";
+import { parallelRepoReadTool } from "./orchestration/index.js";
 import {
   bashBackgroundKillTool,
   bashBackgroundListTool,
@@ -31,6 +33,7 @@ export const shellTools = [
 ];
 
 export const defaultTools = [
+  parallelRepoReadTool,
   ...filesystemTools,
   ...shellTools,
   ...gitTools,
@@ -39,4 +42,3 @@ export const defaultTools = [
   ...mcpTools,
   ...lspTools,
 ];
-

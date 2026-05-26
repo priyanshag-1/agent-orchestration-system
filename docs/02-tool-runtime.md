@@ -43,6 +43,24 @@ Permissions are checked at runtime before execution. This lets you run:
 - a browser-only agent with no filesystem access
 - a review worker with Git read but no Git write
 
+## Tool call lifecycle
+
+```mermaid
+flowchart TD
+  A[Model emits tool call] --> B[Registry finds tool]
+  B --> C[Check permissions]
+  C --> D[Validate input schema]
+  D --> E[Log redacted input]
+  E --> F[Run tool with timeout and signal]
+  F --> G{Success?}
+  G -- Yes --> H[Return structured output]
+  G -- No --> I[Normalize error]
+  H --> J[Append tool result message]
+  I --> J
+```
+
+This keeps unsafe or malformed model output from crossing the system boundary unchecked.
+
 ## Build your own
 
 Implement:
@@ -54,4 +72,3 @@ Implement:
 5. permission checking
 6. error normalization
 7. event logging and redaction
-

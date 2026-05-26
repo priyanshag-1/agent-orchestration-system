@@ -5,15 +5,20 @@ a local model, or a custom hosted endpoint.
 
 ## Flow
 
-```txt
-messages + tool specs
-  -> provider.complete()
-  -> assistant message
-  -> zero or more tool calls
-  -> registry.execute(call)
-  -> tool result messages
-  -> repeat
+```mermaid
+flowchart TD
+  A[User + system messages] --> B[Agent loop]
+  B --> C[Provider complete]
+  C --> D[Assistant message]
+  D --> E{Tool calls?}
+  E -- No --> F[Return final answer]
+  E -- Yes --> G[Tool registry]
+  G --> H[Execute tools]
+  H --> I[Append tool result messages]
+  I --> B
 ```
+
+The loop is intentionally small: the provider decides what to say or call, and the registry is the only path from model output to real actions.
 
 ## Important production concerns
 
@@ -42,4 +47,3 @@ for (let step = 0; step < maxSteps; step++) {
 ```
 
 Then add cancellation, logging, permissions, timeouts, and persistence.
-

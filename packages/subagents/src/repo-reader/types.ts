@@ -1,7 +1,7 @@
 export type RepoReaderQuery = {
   id: string;
   question: string;
-  focusPaths?: string[];
+  focusPaths?: string[] | undefined;
 };
 
 export type RepoReaderFinding = {
@@ -19,4 +19,3 @@ export type RepoReaderReport = {
   findings: RepoReaderFinding[];
   mergedSummary: string;
 };
-

@@ -1,6 +1,6 @@
 import type { ModelProvider } from "@aos/core";
 import { runSubagent } from "@aos/core";
-import type { ToolContext } from "@aos/tool-runtime";
+import type { ParallelRepoReadRequest, ToolContext } from "@aos/tool-runtime";
 import { globTool, grepTool, listTool, readTool } from "@aos/tools";
 import type { RepoReaderFinding, RepoReaderQuery, RepoReaderReport } from "./types.js";
 
@@ -20,8 +20,23 @@ export type RunRepoReaderOptions = {
   context: ToolContext;
   queries: RepoReaderQuery[];
   parentRunId?: string;
-  concurrency?: number;
+  concurrency?: number | undefined;
 };
+
+export function createParallelRepoReadService(provider: ModelProvider) {
+  return async (request: ParallelRepoReadRequest, context: ToolContext) => {
+    return await runRepoReader({
+      provider,
+      context,
+      queries: request.queries.map((query, index) => ({
+        id: query.id ?? `query-${index + 1}`,
+        question: query.question,
+        focusPaths: query.focusPaths,
+      })),
+      concurrency: request.concurrency,
+    });
+  };
+}
 
 export async function runRepoReader(options: RunRepoReaderOptions): Promise<RepoReaderReport> {
   const concurrency = options.concurrency ?? 4;
@@ -92,4 +107,3 @@ function parseFinding(queryId: string, content: string): RepoReaderFinding {
     confidence: "medium",
   };
 }
-

@@ -103,6 +103,19 @@ export type LspClient = {
   definition: (path: string, symbol: string) => Promise<JsonValue>;
 };
 
+export type ParallelRepoReadRequest = {
+  queries: Array<{
+    id?: string | undefined;
+    question: string;
+    focusPaths?: string[] | undefined;
+  }>;
+  concurrency?: number;
+};
+
+export type OrchestrationServices = {
+  parallelRepoRead?: (request: ParallelRepoReadRequest, context: ToolContext) => Promise<JsonValue>;
+};
+
 export type ToolContext = {
   runtime: RuntimeAdapter;
   cwd: string;
@@ -112,6 +125,7 @@ export type ToolContext = {
   logger?: ToolLogger;
   mcp?: McpClient;
   lsp?: LspClient;
+  orchestration?: OrchestrationServices;
 };
 
 export type ToolModelSpec = {
@@ -151,4 +165,3 @@ export type ToolDefinition<InputSchema extends z.ZodTypeAny, Output> = {
 };
 
 export type AnyToolDefinition = ToolDefinition<z.ZodTypeAny, JsonValue>;
-

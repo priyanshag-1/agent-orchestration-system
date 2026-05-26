@@ -9,6 +9,7 @@ Tools in this repo are production-style modules, but each is still portable.
 - `glob` finds files by path pattern.
 - `grep` searches file contents.
 - `write` writes a full file.
+- `parallel_repo_read` delegates focused repo questions to read-only subagents.
 - `bash_run` runs commands.
 - `bash_background_*` manages long-running processes.
 - `git_status`, `git_diff`, `git_commit`, `git_push` wrap Git.
@@ -43,4 +44,3 @@ permissions: ["github:read"]
 input: owner, repo, pullNumber
 output: typed file list
 ```
-

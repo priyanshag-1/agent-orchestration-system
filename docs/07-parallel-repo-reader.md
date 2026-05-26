@@ -17,6 +17,25 @@ main agent asks 3-10 focused questions
   -> parent merges summaries and cited files
 ```
 
+## Agent tool
+
+The first-class tool is `parallel_repo_read`.
+
+Input:
+
+```ts
+{
+  queries: [
+    { question: "Where is authentication enforced?", focusPaths: ["src/server"] },
+    { question: "How are tool calls persisted?" }
+  ],
+  concurrency: 4
+}
+```
+
+The tool itself lives in the generic tool package. The actual subagent implementation is supplied
+through `context.orchestration.parallelRepoRead`, so your host app can swap in any implementation.
+
 ## Worker restrictions
 
 Repo-reader workers should only have:
@@ -45,4 +64,3 @@ No shell. No write. No network. No Git push.
 - Add max bytes read per worker.
 - Add confidence scoring.
 - Deduplicate file ranges before returning to the coordinator.
-

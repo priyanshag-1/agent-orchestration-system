@@ -35,7 +35,7 @@ pnpm build
 ```
 
 Read `docs/00-overview.md` first if you want the architecture. Read
-`docs/18-building-your-own.md` if you want to implement the concepts from scratch.
+`docs/13-building-your-own.md` if you want to implement the concepts from scratch.
 
 ## Design Goals
 

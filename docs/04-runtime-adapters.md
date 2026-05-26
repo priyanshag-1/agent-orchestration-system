@@ -23,6 +23,22 @@ The runtime exposes capabilities:
 Tools require capabilities at execution time. If a browser-only runtime has no filesystem, the
 filesystem tools fail cleanly with a missing capability error.
 
+## Boundary
+
+```mermaid
+flowchart LR
+  A[Agent loop] --> B[Tool registry]
+  B --> C[Tool implementation]
+  C --> D[Runtime adapter]
+  D --> E[(Local machine)]
+  D --> F[(Docker container)]
+  D --> G[(SSH host)]
+  D --> H[(Browser worker)]
+  D --> I[(Sandbox or VM)]
+```
+
+Tools depend on the runtime interface, not the environment. Swapping adapters changes where work happens without changing the tool contract.
+
 ## Runtime examples
 
 - local runtime: direct filesystem and shell access
@@ -43,4 +59,3 @@ const runtime = createMyRuntime({
 ```
 
 Then pass it into `ToolContext`.
-
